@@ -25,21 +25,30 @@ Referensi :
 
 ## Data Understanding
 Dataset yang digunakan adalah Pima Indians Diabetes Dataset(https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database), terdiri dari 768 data pasien wanita dari kelompok etnis Pima Indian dengan fitur-fitur medis berikut:
-- Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age.
+- Pregnancies: Jumlah kehamilan yang pernah dialami
+- Glucose: Konsentrasi glukosa plasma dua jam setelah tes toleransi glukosa oral
+- BloodPressure: Tekanan darah
+- SkinThickness: Ketebalan lipatan kulit
+- Insulin: Kadar insulin
+- BMI: Indeks massa tubuh
+- DiabetesPedigreeFunction: Indikator riwayat keturunan diabetes
+- Age: Usia pasien
 - Target: Outcome (0 = negatif diabetes, 1 = positif diabetes)
 
 ## Data Preparation
 Langkah-langkah yang dilakukan:
-- Pengecekan missing values → Tidak ditemukan missing values eksplisit.
-- Pengecekan duplikat → Tidak ada data duplikat terdeteksi.
+- Mengganti Nilai Tidak Valid dengan NaN, Nilai 0 pada fitur Glucose, BloodPressure, SkinThickness, Insulin, dan BMI dianggap tidak valid. Oleh karena itu, nilai-nilai ini diganti menjadi NaN untuk menandai data yang hilang.
+- Imputasi Nilai yang Hilang, Nilai NaN yang muncul akibat langkah sebelumnya diimputasi menggunakan nilai median dari masing-masing kolom. Median dipilih karena lebih robust terhadap outlier dibandingkan mean.
+- Pemisahan Fitur dan Target, Kolom Outcome dipisahkan sebagai label (target), sedangkan kolom lainnya menjadi fitur (X).
 - Pembagian data → 80% data training, 20% data testing.
 
 ## Modeling
-Model yang digunakan adalah Random Forest Classifier dari scikit-learn. Parameter pelatihan:
-- n_estimators=100
-- random_state=42
-- criterion='gini'
-
+Pada tahap ini, model machine learning dibangun menggunakan algoritma Random Forest Classifier dari library scikit-learn.
+Random Forest adalah metode ensemble learning berbasis decision tree. Algoritma ini membangun banyak decision tree pada data yang berbeda-beda dan menggabungkan prediksi dari semua pohon tersebut untuk menghasilkan prediksi akhir.
+Parameter:
+- n_estimators=100: Jumlah pohon dalam forest.
+- criterion='gini': Digunakan untuk mengukur kualitas split.
+- random_state=42: Supaya hasil dapat direproduksi.
 ## Evaluation
 Model mencapai akurasi: 74.68%, cukup baik untuk baseline model klasifikasi medis.
 
